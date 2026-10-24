@@ -1,4 +1,4 @@
-﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<?xml version = "1.0" encoding = "UTF-8" ?>
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:RegistroEstudiantes"
@@ -9,10 +9,6 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <!-- Colores del diseño de referencia -->
-            <Color x:Key="AzulTitulo">#1E6FD9</Color>
-            <Color x:Key="Turquesa">#12A89D</Color>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

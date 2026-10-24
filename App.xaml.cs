@@ -1,5 +1,3 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
 namespace RegistroEstudiantes
 {
     public partial class App : Application
@@ -7,16 +5,27 @@ namespace RegistroEstudiantes
         public App()
         {
             InitializeComponent();
+
+            string? temaEnv = Environment.GetEnvironmentVariable("REGISTRO_TEMA");
+            if (temaEnv == "Dark")
+            {
+                UserAppTheme = AppTheme.Dark;
+            }
+            else if (temaEnv == "Light")
+            {
+                UserAppTheme = AppTheme.Light;
+            }
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            // Barra de título azul con texto blanco, como en el diseño de referencia.
-            var navegacion = new NavigationPage(new Views.RegistroPage())
-            {
-                BarBackgroundColor = (Color)Resources["AzulTitulo"],
-                BarTextColor = Colors.White
-            };
+            var navegacion = new NavigationPage(new Views.RegistroPage());
+            navegacion.SetAppThemeColor(NavigationPage.BarBackgroundColorProperty, 
+                (Color)Resources["Primary"], 
+                (Color)Resources["SurfaceDark"]);
+            navegacion.SetAppThemeColor(NavigationPage.BarTextColorProperty, 
+                Colors.White, 
+                (Color)Resources["SecondaryDarkText"]);
 
             return new Window(navegacion);
         }

@@ -40,7 +40,38 @@ public partial class RegistroPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+
+        // Sincronizar el interruptor con el tema activo sin disparar re-asignaciones redundantes
+        bool esOscuro = Application.Current?.UserAppTheme == AppTheme.Dark ||
+                        (Application.Current?.UserAppTheme == AppTheme.Unspecified && Application.Current?.RequestedTheme == AppTheme.Dark);
+
+        TemaSwitch.Toggled -= TemaSwitch_Toggled;
+        TemaSwitch.IsToggled = esOscuro;
+        TemaSwitch.Toggled += TemaSwitch_Toggled;
+
+        TemaIconLabel.Text = esOscuro ? "🌙" : "☀️";
+        TemaEstadoLabel.Text = esOscuro ? "Activado (Modo oscuro)" : "Desactivado (Modo claro)";
+
         await CargarEstudiantesAsync();
+    }
+
+    private void TemaSwitch_Toggled(object? sender, ToggledEventArgs e)
+    {
+        if (Application.Current is null)
+            return;
+
+        if (e.Value)
+        {
+            Application.Current.UserAppTheme = AppTheme.Dark;
+            TemaIconLabel.Text = "🌙";
+            TemaEstadoLabel.Text = "Activado (Modo oscuro)";
+        }
+        else
+        {
+            Application.Current.UserAppTheme = AppTheme.Light;
+            TemaIconLabel.Text = "☀️";
+            TemaEstadoLabel.Text = "Desactivado (Modo claro)";
+        }
     }
 
     private async Task CargarEstudiantesAsync()
@@ -147,8 +178,10 @@ public partial class RegistroPage : ContentPage
             $"Acepta términos: {(estudiante.AceptaTerminos ? "Sí" : "No")}";
     }
 
+    /// <summary>
     /// Valida todos los campos. Devuelve el estudiante si todo es correcto;
     /// de lo contrario devuelve null, la lista de errores y el primer campo con error.
+    /// </summary>
     private Estudiante? ValidarFormulario(out List<string> errores, out VisualElement? primerCampoInvalido)
     {
         var listaErrores = new List<string>();
