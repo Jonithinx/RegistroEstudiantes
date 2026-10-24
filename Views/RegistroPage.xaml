@@ -22,33 +22,44 @@
             <!-- ============================================================== -->
             <!-- CONTROL DE TEMA: Switch con UserAppTheme (Slide 8 y Req. 5)   -->
             <!-- ============================================================== -->
-            <Border StrokeThickness="1"
+            <Border StrokeThickness="1.5"
                     StrokeShape="RoundRectangle 12"
                     Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
-                    Padding="16,10">
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceVariantLight}, Dark={StaticResource SurfaceDark}}"
+                    Padding="16,12">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TemaCard_Tapped" />
+                </Border.GestureRecognizers>
                 <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
                     <HorizontalStackLayout Grid.Column="0" Spacing="12" VerticalOptions="Center">
-                        <Label x:Name="TemaIconLabel"
-                               Text="☀️"
-                               FontSize="22"
-                               VerticalOptions="Center" />
-                        <VerticalStackLayout Spacing="0" VerticalOptions="Center">
+                        <Border StrokeShape="RoundRectangle 20"
+                                StrokeThickness="0"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource SurfaceVariantDark}}"
+                                VerticalOptions="Center">
+                            <Label x:Name="TemaIconLabel"
+                                   Text="☀️"
+                                   FontSize="20"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Spacing="1" VerticalOptions="Center">
                             <Label Text="Modo Oscuro"
                                    FontAttributes="Bold"
-                                   FontSize="14"
+                                   FontSize="15"
                                    TextColor="{AppThemeBinding Light={StaticResource Texto}, Dark={StaticResource TextDark}}" />
                             <Label x:Name="TemaEstadoLabel"
                                    Text="Desactivado (Modo claro)"
-                                   FontSize="11"
+                                   FontSize="12"
                                    TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource TextSecondaryDark}}" />
                         </VerticalStackLayout>
                     </HorizontalStackLayout>
 
                     <Switch Grid.Column="1"
                             x:Name="TemaSwitch"
-                            OnColor="{StaticResource Primary}"
-                            ThumbColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Secondary}}"
+                            OnColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                            ThumbColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}"
                             Toggled="TemaSwitch_Toggled"
                             VerticalOptions="Center"
                             SemanticProperties.Description="Cambiar entre modo claro y modo oscuro" />

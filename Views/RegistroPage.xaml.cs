@@ -47,12 +47,18 @@ public partial class RegistroPage : ContentPage
 
         TemaSwitch.Toggled -= TemaSwitch_Toggled;
         TemaSwitch.IsToggled = esOscuro;
+        TemaSwitch.ThumbColor = esOscuro ? Colors.White : (Color)Application.Current!.Resources["Primary"];
         TemaSwitch.Toggled += TemaSwitch_Toggled;
 
         TemaIconLabel.Text = esOscuro ? "🌙" : "☀️";
         TemaEstadoLabel.Text = esOscuro ? "Activado (Modo oscuro)" : "Desactivado (Modo claro)";
 
         await CargarEstudiantesAsync();
+    }
+
+    private void TemaCard_Tapped(object? sender, TappedEventArgs e)
+    {
+        TemaSwitch.IsToggled = !TemaSwitch.IsToggled;
     }
 
     private void TemaSwitch_Toggled(object? sender, ToggledEventArgs e)
@@ -65,12 +71,14 @@ public partial class RegistroPage : ContentPage
             Application.Current.UserAppTheme = AppTheme.Dark;
             TemaIconLabel.Text = "🌙";
             TemaEstadoLabel.Text = "Activado (Modo oscuro)";
+            TemaSwitch.ThumbColor = Colors.White;
         }
         else
         {
             Application.Current.UserAppTheme = AppTheme.Light;
             TemaIconLabel.Text = "☀️";
             TemaEstadoLabel.Text = "Desactivado (Modo claro)";
+            TemaSwitch.ThumbColor = (Color)Application.Current.Resources["Primary"];
         }
     }
 
